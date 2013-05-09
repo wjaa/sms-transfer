@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/add"
+        android:orderInCategory="100"
+        android:title="@string/action_settings" />
+    
+    <item
+        android:id="@+id/log"
+        android:orderInCategory="100"
+        android:title="@string/menu_log" />
+    
+    <item
+        android:id="@+id/pendencias"
+        android:orderInCategory="100"
+        android:title="@string/menu_pendencia" />
+    
+    <item
+        android:id="@+id/configs"
+        android:orderInCategory="100"
+        android:title="@string/menu_config" />
+
+</menu>
