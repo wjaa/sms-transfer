@@ -25,10 +25,10 @@ public class RuleServiceImpl implements RuleService {
 		return dataService.getList(Rule.class);
 	}
 
+
 	@Override
-	public String getAlgo() {
-		
-		return "algo na tela manooo";
+	public Rule getRuleById(int idRule) {
+		return dataService.getById(Rule.class, idRule);
 	}
 
 }

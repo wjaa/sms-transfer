@@ -17,6 +17,11 @@ public interface RuleService {
 	 */
 	List<Rule> listRules();
 
-	String getAlgo();
+	/**
+	 * Busca um Rule pelo seu id.
+	 * @param idRule
+	 * @return
+	 */
+	Rule getRuleById(int idRule);
 	
 }

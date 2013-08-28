@@ -15,9 +15,5 @@
         android:layout_height="249dp" >
 
     </ListView>
-    <Button android:text="Modo Avançado" android:id="@+id/btnModoAvancado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
+    
 </LinearLayout>
