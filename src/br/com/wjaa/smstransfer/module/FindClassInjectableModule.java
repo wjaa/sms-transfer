@@ -2,9 +2,9 @@ package br.com.wjaa.smstransfer.module;
 
 import android.content.Context;
 import br.com.wjaa.smstransfer.service.DataService;
+import br.com.wjaa.smstransfer.service.DataServiceImpl;
 import br.com.wjaa.smstransfer.service.RuleService;
-import br.com.wjaa.smstransfer.service.impl.DataServiceImpl;
-import br.com.wjaa.smstransfer.service.impl.RuleServiceImpl;
+import br.com.wjaa.smstransfer.service.RuleServiceImpl;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;

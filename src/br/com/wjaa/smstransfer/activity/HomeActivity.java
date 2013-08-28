@@ -9,12 +9,15 @@ import roboguice.inject.InjectFragment;
 import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,13 +33,16 @@ import com.google.inject.Inject;
  *
  */
 @ContentView(R.layout.activity_home)
-public class HomeActivity extends RoboActivity {
+public class HomeActivity extends RoboActivity implements OnClickListener{
 
 	@Inject
 	private RuleService ruleService;
 	
 	@InjectView(R.id.listViewRule)
 	private ListView listView;
+	
+	@InjectView(R.id.btnModoAvancado)
+	private Button btnModoAvancado;
 	
 	
 	
@@ -49,7 +55,7 @@ public class HomeActivity extends RoboActivity {
 		List<Rule> rules = ruleService.listRules();
 		this.listView.setAdapter(new StableArrayAdapter(this, R.layout.activity_home, rules));
 		
-		//t.setText(text);
+		btnModoAvancado.setOnClickListener(this);
 		
 	}
 
@@ -61,8 +67,8 @@ public class HomeActivity extends RoboActivity {
 	}
 
 	
-	private class StableArrayAdapter extends ArrayAdapter<Rule> {
-
+	private class StableArrayAdapter extends ArrayAdapter<Rule> implements OnClickListener {
+		int selectedRule = 0;
 	    HashMap<Integer, Rule> mIdMap = new HashMap<Integer, Rule>();
 	    Activity context;
 	    public StableArrayAdapter(Context context, int textViewResourceId,
@@ -80,13 +86,28 @@ public class HomeActivity extends RoboActivity {
 	    	View v = inflater.inflate(R.layout.list_item, parent, false);  
 	        TextView tv = (TextView)v.findViewById(R.id.listItemBase);
 	      
-	      Rule r = this.mIdMap.get(position);
-	      tv.setText(r.getNome());
-	      // Change the icon for Windows and iPhone
-
+	        Rule r = this.mIdMap.get(position);
+	        tv.setText(r.getNome());
+	        tv.setOnClickListener(StableArrayAdapter.this);
+	        
 	      return tv;
 	    }
+
+		@Override
+		public void onClick(View v) {
+			Intent i = new Intent(HomeActivity.this, RuleDetailActivity.class);
+			i.putExtra("idRule", selectedRule);
+			startActivityForResult(i, 1);
+			
+		}
 	  }
+
+
+	@Override
+	public void onClick(View v) {
+		Intent i = new Intent(this, RuleFunctionActivity.class);
+		startActivityForResult(i, 1);
+	}
 
 	
 

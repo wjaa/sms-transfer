@@ -6,5 +6,11 @@
     <string name="menu_config">Config</string>
     <string name="menu_pendencia">Pendências</string>
     <string name="menu_log">Log</string>
+    <string name="assinaturaMethodJs">function exec(sms){ %s }</string>
+    <string name="title_activity_advanced_rule">AdvancedRuleActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="smsTest">exec(\"Ta Eu quero ser muito rica Ou Eu adoraria socar meu namorado\");</string>
+    <string name="title_activity_detail_rule">Detalhes da Regra</string>
 
 </resources>
