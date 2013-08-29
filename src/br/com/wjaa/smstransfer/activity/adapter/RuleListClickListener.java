@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import br.com.wjaa.smstransfer.activity.RuleDetailActivity;
+import br.com.wjaa.smstransfer.activity.RuleFormActivity;
 import br.com.wjaa.smstransfer.model.Rule;
 
 public class RuleListClickListener implements OnClickListener {
@@ -19,7 +20,7 @@ public class RuleListClickListener implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		Intent i = new Intent(context, RuleDetailActivity.class);
+		Intent i = new Intent(context, RuleFormActivity.class);
 		i.putExtra("idRule", rule.getId());
 		context.startActivityForResult(i, 1);
 		

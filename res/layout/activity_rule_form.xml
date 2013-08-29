@@ -96,6 +96,11 @@
                  android:layout_width="match_parent"
         	      android:layout_height="wrap_content"/>
     
+    <Button android:id="@+id/btnModoAvancado"
+        	android:text="Modo avançado"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content" />
+    
     <Button android:id="@+id/btnSalvar"
         	android:text="@string/salvar"
         	android:layout_width="wrap_content"

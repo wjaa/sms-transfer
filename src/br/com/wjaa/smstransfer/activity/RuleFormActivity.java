@@ -1,8 +1,11 @@
 package br.com.wjaa.smstransfer.activity;
 
+import roboguice.activity.RoboActivity;
+import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,16 +17,21 @@ import br.com.wjaa.smstransfer.model.Action;
 import br.com.wjaa.smstransfer.model.Filter;
 import br.com.wjaa.smstransfer.model.Rule;
 import br.com.wjaa.smstransfer.service.RuleService;
+import br.com.wjaa.smstransfer.utils.AndroidUtils;
 
 import com.google.inject.Inject;
 
-public class RuleFormActivity extends Activity implements OnClickListener{
+@ContentView(R.layout.activity_rule_form)
+public class RuleFormActivity extends RoboActivity implements OnClickListener{
 
 	@Inject
 	private RuleService ruleService;
 	
 	@InjectView(R.id.btnSalvar)
 	private Button btnSalvar;
+	
+	@InjectView(R.id.btnModoAvancado)
+	private Button btnModoAdvanced;
 	
 	@InjectView(R.id.edtNomeRegra)
 	private EditText edtNomeRegra;
@@ -52,13 +60,15 @@ public class RuleFormActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_rule_form);
-		Integer idRule = savedInstanceState.getInt("idRule");
+		Intent myIntent= getIntent(); // gets the previously created intent
+		Integer idRule = myIntent.getIntExtra("idRule",0);
 		
-		if (idRule != null){
+		if (idRule != null && idRule > 0){
 			this.populateView(idRule);
 		}
 		
 		this.btnSalvar.setOnClickListener(this);
+		this.btnModoAdvanced.setOnClickListener(this);
 	}
 
 	private void populateView(Integer idRule) {
@@ -84,9 +94,23 @@ public class RuleFormActivity extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		if ( validate() ){
-			this.populateModelAndSave();
+		
+		switch (v.getId()) {
+		case R.id.btnSalvar:
+			
+			if ( validate() ){
+				this.populateModelAndSave();
+			}
+			
+			break;
+		case R.id.btnModoAvancado:
+			AndroidUtils.openActivity(this, RuleFunctionActivity.class);
+			break;
+
+		default:
+			break;
 		}
+		
 		
 		
 	}
