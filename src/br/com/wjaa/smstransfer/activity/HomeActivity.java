@@ -6,12 +6,15 @@ import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import br.com.wjaa.smstransfer.R;
 import br.com.wjaa.smstransfer.activity.adapter.StableArrayAdapter;
 import br.com.wjaa.smstransfer.model.Rule;
 import br.com.wjaa.smstransfer.service.RuleService;
+import br.com.wjaa.smstransfer.utils.AndroidUtils;
 
 import com.google.inject.Inject;
 
@@ -21,7 +24,7 @@ import com.google.inject.Inject;
  *
  */
 @ContentView(R.layout.activity_home)
-public class HomeActivity extends RoboActivity{
+public class HomeActivity extends RoboActivity implements OnClickListener{
 
 	@Inject
 	private RuleService ruleService;
@@ -29,21 +32,51 @@ public class HomeActivity extends RoboActivity{
 	@InjectView(R.id.listViewRule)
 	private ListView listView;
 	
+	@InjectView(R.id.btnAdd)
+	private ImageButton btnAdd;
+	@InjectView(R.id.btnHistory)
+	private ImageButton btnHistory;
+	@InjectView(R.id.btnPends)
+	private ImageButton btnPend;
+	@InjectView(R.id.btnConfig)
+	private ImageButton btnConfig;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		//TextView t = (TextView) findViewById(R.id.texthome);
-		
 		List<Rule> rules = ruleService.listRules();
 		this.listView.setAdapter(new StableArrayAdapter(this, R.layout.activity_home, rules));
+		this.createActionsMenu();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home, menu);
-		return true;
+	
+	
+	private void createActionsMenu() {
+		btnAdd.setOnClickListener(this);
+		btnHistory.setOnClickListener(this);
+		btnPend.setOnClickListener(this);
+		btnConfig.setOnClickListener(this);
 	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		
+		switch (v.getId()) {
+		case R.id.btnAdd: AndroidUtils.openActivity(this, RuleFormActivity.class); 
+			break;
+		case R.id.btnHistory: AndroidUtils.openActivity(this, RuleHistoryActivity.class); 
+			break;
+		case R.id.btnPends: AndroidUtils.openActivity(this, RulePendsActivity.class); 
+			break;
+		case R.id.btnConfig: AndroidUtils.openActivity(this, ConfigActivity.class); 
+			break;
+		}
+		
+	}
+	
 
 }

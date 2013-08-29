@@ -32,6 +32,22 @@
             android:name="br.com.wjaa.smstransfer.activity.RuleDetailActivity"
             android:label="@string/title_activity_detail_rule" >
         </activity>
+        <activity
+            android:name="br.com.wjaa.smstransfer.activity.RuleFormActivity"
+            android:label="@string/title_activity_rule_form" >
+        </activity>
+        <activity
+            android:name="br.com.wjaa.smstransfer.activity.RuleHistoryActivity"
+            android:label="@string/title_activity_rule_history" >
+        </activity>
+        <activity
+            android:name="br.com.wjaa.smstransfer.activity.RulePendsActivity"
+            android:label="@string/title_activity_rule_pends" >
+        </activity>
+        <activity
+            android:name="br.com.wjaa.smstransfer.activity.ConfigActivity"
+            android:label="@string/title_activity_config" >
+        </activity>
     </application>
 
 </manifest>

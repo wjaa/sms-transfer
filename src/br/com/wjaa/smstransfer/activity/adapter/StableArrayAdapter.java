@@ -5,18 +5,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import br.com.wjaa.smstransfer.R;
-import br.com.wjaa.smstransfer.activity.HomeActivity;
-import br.com.wjaa.smstransfer.activity.RuleDetailActivity;
 import br.com.wjaa.smstransfer.model.Rule;
 
 public class StableArrayAdapter extends ArrayAdapter<Rule>{

@@ -24,10 +24,6 @@ public class Rule extends PersistenceBean{
 		super( "rule", new String[] { "id", "nome"} );
 		
 	}
-
-
-	
-	
 	
 	public Integer getId() {
 		return id;

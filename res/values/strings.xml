@@ -12,5 +12,15 @@
     <string name="hello_world">Hello world!</string>
     <string name="smsTest">exec(\"Ta Eu quero ser muito rica Ou Eu adoraria socar meu namorado\");</string>
     <string name="title_activity_detail_rule">Detalhes da Regra</string>
+    <string name="title_activity_rule_form">Criar uma Rule</string>
+    <string name="title_activity_rule_history">Historico de Regras</string>
+    <string name="title_activity_rule_pends">Regras Pendentes</string>
+    <string name="title_activity_config">Cofiguração</string>
+    <string name="nome_regra">Nome Regra</string>
+    <string name="aplicar_regex">Aplicar Regex no corpo do sms</string>
+    <string name="aplicar_contact">Quando o remetente for um contato</string>
+    <string name="oque_fazer_filtro">O que fazer quando filtro for valido?</string>
+    <string name="enviar_email">Enviar por email</string>
+    <string name="salvar">Salvar</string>
 
 </resources>
