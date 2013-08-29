@@ -1,5 +1,7 @@
 package br.com.wjaa.smstransfer.model;
 
+import java.util.List;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import br.com.wjaa.smstransfer.database.PersistenceBean;
@@ -16,11 +18,12 @@ public class Filter extends PersistenceBean{
 	 */
 	private static final long serialVersionUID = -9137307555546386475L;
 	
-
-	public Filter(String tabela, String[] colunas) {
+	
+	
+	public Filter() {
 		super( "filter", new String[] { "id", "regex", "regex_type", "contact_number", "enabled_filter_contact", "enabled_filter_regex", "id_rule"} );
 	}
-	
+
 	public enum RegexType{
 		EQUALS(1, "Igual"),
 		CONTAINS(2, "Contém"),

@@ -47,5 +47,19 @@ public interface RuleService {
 	 * @return 
 	 */
 	Rule saveRule(Rule rule);
+
+	
+	/**
+	 * 
+	 * @param action
+	 */
+	void saveAction(Action action);
+
+	
+	/**
+	 * 
+	 * @param filter
+	 */
+	void saveFilter(Filter filter);
 	
 }

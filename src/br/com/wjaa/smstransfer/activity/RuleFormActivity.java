@@ -109,6 +109,28 @@ public class RuleFormActivity extends Activity implements OnClickListener{
 		rule.setNome(edtNomeRegra.getText().toString());
 		
 		rule = this.ruleService.saveRule(rule);
+		
+		Action action = this.ruleService.getActionByIdRule(rule.getId());
+		if (action == null){
+			action = new Action();
+			action.setIdRule(rule.getId());
+		}
+		action.setEnabledEmail(chbEnabledEmail.isChecked());
+		action.setEmail(edtEmail.getText().toString());
+		
+		this.ruleService.saveAction(action);
+		
+		Filter filter = this.ruleService.getFilterByIdRule(rule.getId());
+		if (filter == null){
+			filter = new Filter();
+			filter.setIdRule(rule.getId());
+		}
+		filter.setContactNumber(edtContato.getText().toString());
+		filter.setRegex(edtRegex.getText().toString());
+		filter.setEnabledFilterContact(chbEnabledContact.isChecked());
+		filter.setEnabledFilterRegex(chbEnabledRegex.isChecked());
+		
+		this.ruleService.saveFilter(filter);
 	}
 	
 	

@@ -19,10 +19,11 @@ public class Action extends PersistenceBean{
 	private Integer id;
 	private String email;
 	private Boolean enabledEmail;
+	private Integer idRule;
 	
 	
 	public Action() {
-		super( "action", new String[] { "id", "email", "enabled_email"} );
+		super( "action", new String[] { "id", "email", "enabled_email", "id_rule"} );
 		
 	}
 	
@@ -56,6 +57,7 @@ public class Action extends PersistenceBean{
 		val.put( "id", this.getId() );
 		val.put( "email", this.getEmail());
 		val.put( "enabled_email", this.getEnabledEmail() ? 1 : 0 );
+		val.put( "id_rule", this.getIdRule());
 		return val;
 	}
 
@@ -63,6 +65,15 @@ public class Action extends PersistenceBean{
 		this.setId( cr.getInt( 0 ) );
 		this.setEmail( cr.getString( 1 ) );
 		this.setEnabledEmail(cr.getInt( 2 ) == 0 ? false : true );
+		this.setIdRule(cr.getInt(3));
+	}
+
+	public Integer getIdRule() {
+		return idRule;
+	}
+
+	public void setIdRule(Integer idRule) {
+		this.idRule = idRule;
 	}
 
 	
@@ -89,6 +100,11 @@ public class Action extends PersistenceBean{
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (idRule == null) {
+			if (other.idRule != null)
+				return false;
+		} else if (!idRule.equals(other.idRule))
 			return false;
 		return true;
 	}
