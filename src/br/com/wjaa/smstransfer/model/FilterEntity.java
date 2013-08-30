@@ -1,7 +1,5 @@
 package br.com.wjaa.smstransfer.model;
 
-import java.util.List;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import br.com.wjaa.smstransfer.database.PersistenceBean;
@@ -11,7 +9,7 @@ import br.com.wjaa.smstransfer.database.PersistenceBean;
  * @author root
  *
  */
-public class Filter extends PersistenceBean{
+public class FilterEntity extends PersistenceBean{
 
 	/**
 	 * 
@@ -20,7 +18,7 @@ public class Filter extends PersistenceBean{
 	
 	
 	
-	public Filter() {
+	public FilterEntity() {
 		super( "filter", new String[] { "id", "regex", "regex_type", "contact_number", "enabled_filter_contact", "enabled_filter_regex", "id_rule"} );
 	}
 
@@ -154,7 +152,8 @@ public class Filter extends PersistenceBean{
 		ContentValues val = new ContentValues();
 		val.put( "id", this.getId() );
 		val.put( "regex", this.getRegex() );
-		val.put( "regex_type", this.getRegexType().getId() );
+		//val.put( "regex_type", this.getRegexType().getId() );
+		val.put( "regex_type", 1 );
 		val.put( "contact_number", this.getContactNumber() );
 		val.put( "enabled_filter_contact", this.getEnabledFilterContact() ? 1 : 0 );
 		val.put( "enabled_filter_regex", this.getEnabledFilterRegex() ? 1 : 0 );
@@ -165,6 +164,7 @@ public class Filter extends PersistenceBean{
 	public void setBean(Cursor cr) {
 		this.setId(cr.getInt( 0 ));
 		this.setRegex(cr.getString( 1 ));
+		//this.setRegexType(RegexType.getRegexTypeById((Integer)cr.getInt( 2 )));
 		this.setRegexType(RegexType.getRegexTypeById((Integer)cr.getInt( 2 )));
 		this.setContactNumber(cr.getString( 3 ));
 		this.setEnabledFilterContact( cr.getInt( 4 ) == 0 ? false : true);
@@ -182,7 +182,7 @@ public class Filter extends PersistenceBean{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Filter other = (Filter) obj;
+		FilterEntity other = (FilterEntity) obj;
 		if (contactNumber == null) {
 			if (other.contactNumber != null)
 				return false;

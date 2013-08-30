@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import br.com.wjaa.smstransfer.R;
-import br.com.wjaa.smstransfer.model.Rule;
+import br.com.wjaa.smstransfer.activity.listener.RuleListClickListener;
+import br.com.wjaa.smstransfer.model.RuleEntity;
 
-public class StableArrayAdapter extends ArrayAdapter<Rule>{
+public class StableArrayAdapter extends ArrayAdapter<RuleEntity>{
 	int selectedRule = 0;
-    HashMap<Integer, Rule> mIdMap = new HashMap<Integer, Rule>();
+    HashMap<Integer, RuleEntity> mIdMap = new HashMap<Integer, RuleEntity>();
     Activity context;
     public StableArrayAdapter(Context context, int textViewResourceId,
-        List<Rule> rules) {
+        List<RuleEntity> rules) {
       super(context, textViewResourceId, rules);
       for (int i = 0; i < rules.size(); ++i) {
         mIdMap.put(i,rules.get(i));
@@ -32,7 +33,7 @@ public class StableArrayAdapter extends ArrayAdapter<Rule>{
     	View v = inflater.inflate(R.layout.list_item, parent, false);  
         TextView tv = (TextView)v.findViewById(R.id.listItemBase);
       
-        Rule r = this.mIdMap.get(position);
+        RuleEntity r = this.mIdMap.get(position);
         
         tv.setText(r.getNome());
         tv.setOnClickListener(new RuleListClickListener(this.context,r));

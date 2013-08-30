@@ -9,7 +9,7 @@ import br.com.wjaa.smstransfer.database.PersistenceBean;
  * @author wagneraraujo-sao
  *
  */
-public class Action extends PersistenceBean{
+public class ActionEntity extends PersistenceBean{
 
 	
 	/**
@@ -22,7 +22,7 @@ public class Action extends PersistenceBean{
 	private Integer idRule;
 	
 	
-	public Action() {
+	public ActionEntity() {
 		super( "action", new String[] { "id", "email", "enabled_email", "id_rule"} );
 		
 	}
@@ -85,7 +85,7 @@ public class Action extends PersistenceBean{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Action other = (Action) obj;
+		ActionEntity other = (ActionEntity) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;

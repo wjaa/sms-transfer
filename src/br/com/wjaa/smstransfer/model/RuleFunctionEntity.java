@@ -9,7 +9,7 @@ import br.com.wjaa.smstransfer.database.PersistenceBean;
  * @author wagneraraujo-sao
  *
  */
-public class RuleFunction extends PersistenceBean{
+public class RuleFunctionEntity extends PersistenceBean{
 	
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class RuleFunction extends PersistenceBean{
 	private String bodyFunction;
 	
 
-	public RuleFunction() {
+	public RuleFunctionEntity() {
 		super( "rule_function", new String[] { "id", "id_rule", "body_function"} );
 		
 	}
@@ -84,7 +84,7 @@ public class RuleFunction extends PersistenceBean{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RuleFunction other = (RuleFunction) obj;
+		RuleFunctionEntity other = (RuleFunctionEntity) obj;
 		if (bodyFunction == null) {
 			if (other.bodyFunction != null)
 				return false;

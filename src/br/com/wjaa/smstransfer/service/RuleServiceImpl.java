@@ -2,11 +2,12 @@ package br.com.wjaa.smstransfer.service;
 
 import java.util.List;
 
-import com.google.inject.Inject;
+import br.com.wjaa.smstransfer.model.ActionEntity;
+import br.com.wjaa.smstransfer.model.FilterEntity;
+import br.com.wjaa.smstransfer.model.RuleEntity;
+import br.com.wjaa.smstransfer.model.RuleFunctionEntity;
 
-import br.com.wjaa.smstransfer.model.Action;
-import br.com.wjaa.smstransfer.model.Filter;
-import br.com.wjaa.smstransfer.model.Rule;
+import com.google.inject.Inject;
 
 /**
  * 
@@ -23,47 +24,75 @@ public class RuleServiceImpl implements RuleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Rule> listRules() {
-		return dataService.getList(Rule.class);
+	public List<RuleEntity> listRules() {
+		return dataService.getList(RuleEntity.class);
 	}
 
 
 	@Override
-	public Rule getRuleById(int idRule) {
-		return dataService.getById(Rule.class, idRule);
+	public RuleEntity getRuleById(int idRule) {
+		return dataService.getById(RuleEntity.class, idRule);
 	}
 
 
 	@Override
-	public Filter getFilterByIdRule(Integer idRule) {
-		return null;
+	public FilterEntity getFilterByIdRule(Integer idRule) {
+		return dataService.findUniqueResult(FilterEntity.class, "id_rule=?", new String[]{String.valueOf(idRule)});
 	}
 
 
 	@Override
-	public Action getActionByIdRule(Integer idRule) {
-		// TODO Auto-generated method stub
-		return null;
+	public ActionEntity getActionByIdRule(Integer idRule) {
+		return dataService.findUniqueResult(ActionEntity.class, "id_rule=?", new String[]{String.valueOf(idRule)});
+	}
+	
+	@Override
+	public RuleFunctionEntity getRuleFunctionByIdRule(Integer idRule) {
+		return dataService.findUniqueResult(RuleFunctionEntity.class, "id_rule=?", new String[]{String.valueOf(idRule)});
 	}
 
 
 	@Override
-	public Rule saveRule(Rule rule) {
-		// TODO Auto-generated method stub
-		return null;
+	public RuleEntity saveRule(RuleEntity rule) {
+		return this.dataService.insertOrUpdate(rule);
 	}
 
 
 	@Override
-	public void saveAction(Action action) {
-		// TODO Auto-generated method stub
+	public void saveAction(ActionEntity action) {
+		this.dataService.insertOrUpdate(action);
+	}
+
+
+	@Override
+	public void saveFilter(FilterEntity filter) {
+		this.dataService.insertOrUpdate(filter);
 		
 	}
 
 
 	@Override
-	public void saveFilter(Filter filter) {
-		// TODO Auto-generated method stub
+	public void removeRule(RuleEntity rule) {
+		//fazendo cascata.
+		ActionEntity action = this.getActionByIdRule(rule.getId());
+		
+		if (action != null){
+			this.dataService.deleteById(action);
+		}
+		
+		FilterEntity filter = this.getFilterByIdRule(rule.getId());
+		
+		if (filter != null){
+			this.dataService.deleteById(filter);
+		}
+		
+		RuleFunctionEntity function = this.getRuleFunctionByIdRule(rule.getId());
+		
+		if (function != null){
+			this.dataService.deleteById(function);
+		}
+		
+		this.dataService.deleteById(rule);
 		
 	}
 

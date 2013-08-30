@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import br.com.wjaa.smstransfer.R;
 import br.com.wjaa.smstransfer.activity.adapter.StableArrayAdapter;
-import br.com.wjaa.smstransfer.model.Rule;
+import br.com.wjaa.smstransfer.model.RuleEntity;
 import br.com.wjaa.smstransfer.service.RuleService;
 import br.com.wjaa.smstransfer.utils.AndroidUtils;
 
@@ -46,9 +46,15 @@ public class HomeActivity extends RoboActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		List<Rule> rules = ruleService.listRules();
-		this.listView.setAdapter(new StableArrayAdapter(this, R.layout.activity_home, rules));
+		listAllRules();
 		this.createActionsMenu();
+	}
+
+
+
+	private void listAllRules() {
+		List<RuleEntity> rules = ruleService.listRules();
+		this.listView.setAdapter(new StableArrayAdapter(this, R.layout.activity_home, rules));
 	}
 
 	
@@ -76,6 +82,14 @@ public class HomeActivity extends RoboActivity implements OnClickListener{
 			break;
 		}
 		
+	}
+
+
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		this.listAllRules();
 	}
 	
 

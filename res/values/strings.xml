@@ -21,6 +21,8 @@
     <string name="aplicar_contact">Quando o remetente for um contato</string>
     <string name="oque_fazer_filtro">O que fazer quando filtro for valido?</string>
     <string name="enviar_email">Enviar por email</string>
-    <string name="salvar">Salvar</string>
+    <string name="btn_salvar">Salvar</string>
+    <string name="btn_apagar">Apagar</string>
+    <string name="btn_modo_avancado">Modo Avançado</string>
 
 </resources>

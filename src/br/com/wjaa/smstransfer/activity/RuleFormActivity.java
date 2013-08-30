@@ -3,8 +3,6 @@ package br.com.wjaa.smstransfer.activity;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,16 +11,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import br.com.wjaa.smstransfer.R;
-import br.com.wjaa.smstransfer.model.Action;
-import br.com.wjaa.smstransfer.model.Filter;
-import br.com.wjaa.smstransfer.model.Rule;
+import br.com.wjaa.smstransfer.callback.DialogCallback;
+import br.com.wjaa.smstransfer.model.ActionEntity;
+import br.com.wjaa.smstransfer.model.FilterEntity;
+import br.com.wjaa.smstransfer.model.RuleEntity;
 import br.com.wjaa.smstransfer.service.RuleService;
 import br.com.wjaa.smstransfer.utils.AndroidUtils;
 
 import com.google.inject.Inject;
 
 @ContentView(R.layout.activity_rule_form)
-public class RuleFormActivity extends RoboActivity implements OnClickListener{
+public class RuleFormActivity extends RoboActivity implements OnClickListener, DialogCallback{
 
 	@Inject
 	private RuleService ruleService;
@@ -32,6 +31,9 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 	
 	@InjectView(R.id.btnModoAvancado)
 	private Button btnModoAdvanced;
+	
+	@InjectView(R.id.btnApagar)
+	private Button btnApagar;
 	
 	@InjectView(R.id.edtNomeRegra)
 	private EditText edtNomeRegra;
@@ -54,7 +56,7 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 	@InjectView(R.id.chbEnabledEmail)
 	private CheckBox chbEnabledEmail;
 	
-	private Rule rule;
+	private RuleEntity rule;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +71,14 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 		
 		this.btnSalvar.setOnClickListener(this);
 		this.btnModoAdvanced.setOnClickListener(this);
+		this.btnApagar.setOnClickListener(this);
 	}
 
 	private void populateView(Integer idRule) {
 		this.rule = this.ruleService.getRuleById(idRule);
 		edtNomeRegra.setText(rule.getNome());
 		
-		Filter filter = this.ruleService.getFilterByIdRule(idRule);
+		FilterEntity filter = this.ruleService.getFilterByIdRule(idRule);
 		
 		if (filter != null){
 			chbEnabledContact.setChecked(filter.getEnabledFilterContact());
@@ -84,7 +87,7 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 			edtContato.setText(filter.getContactNumber());
 		}
 		
-		Action action = this.ruleService.getActionByIdRule(idRule);
+		ActionEntity action = this.ruleService.getActionByIdRule(idRule);
 		
 		if (action != null){
 			chbEnabledEmail.setChecked(action.getEnabledEmail());
@@ -100,12 +103,19 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 			
 			if ( validate() ){
 				this.populateModelAndSave();
+				AndroidUtils.showMessageDlg("Info",
+						"Regra salva com sucesso!", this);
 			}
 			
 			break;
 		case R.id.btnModoAvancado:
 			AndroidUtils.openActivity(this, RuleFunctionActivity.class);
 			break;
+			
+		case R.id.btnApagar:
+			AndroidUtils.showConfirmDlg("Duvida?", "Deseja realmente apagar essa regra?", 
+					this, this);
+			break;	
 
 		default:
 			break;
@@ -116,11 +126,10 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 	}
 
 	private boolean validate() {
-		if ( edtNomeRegra.getText() == null){
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			alertDialog.setTitle("Campo obrigatorio");
-			alertDialog.setMessage("Campo nome da regra é obrigatorio");
-			alertDialog.show();
+		if ( edtNomeRegra.getText().length() == 0){
+			AndroidUtils.showMessageDlg("Campo Obrigatorio",
+					"Campo nome da regra é obrigatorio", this);
+			edtNomeRegra.requestFocus();
 			return false;
 		}
 		return true;
@@ -128,15 +137,15 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 
 	private void populateModelAndSave() {
 		if (rule == null){
-			rule = new Rule();
+			rule = new RuleEntity();
 		}
 		rule.setNome(edtNomeRegra.getText().toString());
 		
 		rule = this.ruleService.saveRule(rule);
 		
-		Action action = this.ruleService.getActionByIdRule(rule.getId());
+		ActionEntity action = this.ruleService.getActionByIdRule(rule.getId());
 		if (action == null){
-			action = new Action();
+			action = new ActionEntity();
 			action.setIdRule(rule.getId());
 		}
 		action.setEnabledEmail(chbEnabledEmail.isChecked());
@@ -144,9 +153,9 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 		
 		this.ruleService.saveAction(action);
 		
-		Filter filter = this.ruleService.getFilterByIdRule(rule.getId());
+		FilterEntity filter = this.ruleService.getFilterByIdRule(rule.getId());
 		if (filter == null){
-			filter = new Filter();
+			filter = new FilterEntity();
 			filter.setIdRule(rule.getId());
 		}
 		filter.setContactNumber(edtContato.getText().toString());
@@ -156,8 +165,16 @@ public class RuleFormActivity extends RoboActivity implements OnClickListener{
 		
 		this.ruleService.saveFilter(filter);
 	}
-	
-	
-	
+
+	@Override
+	public void confirm() {
+		this.ruleService.removeRule(this.rule);
+		this.finish();
+	}
+
+	@Override
+	public void cancel() {
+		
+	}
 
 }

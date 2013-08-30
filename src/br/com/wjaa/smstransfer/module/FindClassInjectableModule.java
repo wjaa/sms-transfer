@@ -1,6 +1,8 @@
 package br.com.wjaa.smstransfer.module;
 
 import android.content.Context;
+import br.com.wjaa.smstransfer.service.ConfigService;
+import br.com.wjaa.smstransfer.service.ConfigServiceImpl;
 import br.com.wjaa.smstransfer.service.DataService;
 import br.com.wjaa.smstransfer.service.DataServiceImpl;
 import br.com.wjaa.smstransfer.service.RuleService;
@@ -29,6 +31,7 @@ public class FindClassInjectableModule implements Module {
 	@Override
 	public void configure(Binder binder) {
 		binder.bind(RuleService.class).to(RuleServiceImpl.class);
+		binder.bind(ConfigService.class).to(ConfigServiceImpl.class);
 		binder.bind(DataService.class).toInstance(new DataServiceImpl(this.context));
 	}
 	

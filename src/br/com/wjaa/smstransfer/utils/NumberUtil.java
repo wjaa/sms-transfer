@@ -5,14 +5,14 @@ public class NumberUtil {
 	public static final Integer getInteger(String value) {
 		if ( value == null )
 			return null;
-		return new Integer( value );
+		return Integer.valueOf(value);
 	}
 	
 	public static final long longValue(Object value) {
 		if (value == null)
 			return 0L;
 		;
-		return new Long( value.toString() ).longValue();
+		return Long.valueOf(value.toString());
 	}
 	
 	
@@ -32,7 +32,7 @@ public class NumberUtil {
 	 * @return true caso positivo e false caso contrario
 	 */
 	public static boolean isPositive(Integer v){
-		return isPositive(v.longValue());
+		return v != null && isPositive(v.longValue());
 	}
 	
 	
@@ -42,7 +42,7 @@ public class NumberUtil {
 	 * @return true caso positivo e false caso contrario
 	 */
 	public static boolean isPositive(Short s){
-		return isPositive(s.longValue());
+		return s != null && isPositive(s.longValue());
 	}
 
 }
