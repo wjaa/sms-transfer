@@ -1,10 +1,11 @@
 package br.com.wjaa.smstransfer.service;
 
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-
+import br.com.wjaa.smstransfer.buffer.BufferFacade;
 import br.com.wjaa.smstransfer.model.AppConfig;
 import br.com.wjaa.smstransfer.model.ConfigEntity;
+
+import com.google.gson.GsonBuilder;
+import com.google.inject.Inject;
 
 
 /**
@@ -18,7 +19,6 @@ public class ConfigServiceImpl implements ConfigService {
 	private DataService dataService;
 	private GsonBuilder g = new GsonBuilder();
 	
-	
 	@Override
 	public AppConfig getConfig() {
 		ConfigEntity c = this.dataService.getById(ConfigEntity.class, ConfigEntity.ID_CONFIG);
@@ -29,6 +29,7 @@ public class ConfigServiceImpl implements ConfigService {
 			ac.setNotifyExecuteAction(true);
 			ac.setNotifySmsAccept(true);
 			this.saveConfig(ac);
+			c = this.dataService.getById(ConfigEntity.class, ConfigEntity.ID_CONFIG);
 		}
 		
 		return this.jsonToObject(c.getConfigJson());
@@ -48,9 +49,14 @@ public class ConfigServiceImpl implements ConfigService {
 		if (c == null){
 			c = new ConfigEntity();
 			c.setId(ConfigEntity.ID_CONFIG);
+			c.setConfigJson(this.objectToJson(appConfig));
+			this.dataService.insert(c);
+		}else{
+			c.setConfigJson(this.objectToJson(appConfig));
+			this.dataService.updateById(c);
 		}
-		c.setConfigJson(this.objectToJson(appConfig));
-		this.dataService.insertOrUpdate(c);
+
+		BufferFacade.updateAppConfig(appConfig);
 	}
 
 }

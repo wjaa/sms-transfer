@@ -9,11 +9,9 @@ import br.com.wjaa.smstransfer.database.PersistenceBean;
  * @author wagneraraujo-sao
  *
  */
+
 public class ConfigEntity extends PersistenceBean{
 
-	
-	
-	
 	/**
 	 * 
 	 */

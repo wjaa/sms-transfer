@@ -24,5 +24,9 @@
     <string name="btn_salvar">Salvar</string>
     <string name="btn_apagar">Apagar</string>
     <string name="btn_modo_avancado">Modo Avançado</string>
+    <string name="txt_notifySmsAccept">Notificar quando um sms cair em uma regra.</string>
+    <string name="txt_notifyExecuteAction">Notificar quando uma regra for aplicada com sucesso.</string>
+    <string name="txt_activeSystemOnStart">Ativar o sistema ao ligar o celular.</string>
+    
 
 </resources>
